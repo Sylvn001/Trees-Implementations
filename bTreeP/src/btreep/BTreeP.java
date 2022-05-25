@@ -16,9 +16,10 @@ public class BTreeP {
         TriePatricia trie = new TriePatricia();
         
         for(int i=0; i< TL; i++){
-            System.out.println(arrString[i]);
             trie.inserir(arrString[i]);
         };
+        
+        trie.exibir();
     }
     
 }

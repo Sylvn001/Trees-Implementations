@@ -8,6 +8,10 @@ public class TriePatricia {
     private No raiz;
     private int M = 26;
 
+    public TriePatricia() {
+        raiz = null;
+    }
+
     public No getRaiz() {
         return raiz;
     }
@@ -23,8 +27,8 @@ public class TriePatricia {
     public void setM(int M) {
         this.M = M;
     }
-    
-    public void inserir(String palavra){        
+
+    public void inserir(String palavra){
         if(raiz == null){
             raiz = new No();
         }
@@ -32,34 +36,35 @@ public class TriePatricia {
         {
             int indexPalavra = 0;
             boolean flagFim = false;
-            No noPalavra = new No(palavra);
+            No noPalavra, aux = raiz;
 
-            while(indexPalavra < palavra.length() ){
-                buscaMelhorPos(palavra.charAt(indexPalavra));
+            while(!flagFim){
+                int pos = palavra.toLowerCase().charAt(indexPalavra) - 'a';
                 
-                if(palavra.charAt(indexPalavra)){
+                if(aux.getvLig(pos) == null)
+                {
+                    String restoPalavra="";
+                    for(int i=indexPalavra, j=0; i < palavra.length(); i++){
+                        restoPalavra += palavra.charAt(indexPalavra);
+                    }
                     
+                    flagFim = true;
+                    noPalavra = new No(restoPalavra);
+                    noPalavra.setFlag(flagFim);
+                    aux.setvLig(noPalavra, pos);
+                    aux.setTL(aux.getTL()+1);
                 }
-                indexPalavra++;
+                else
+                {
+                    aux = aux.getvLig(pos);
+                    indexPalavra++;
+                }              
             }
         }
     }
     
-    public No localizarNo(String info)
-    {
-        No no = raiz;
-        int pos;
-        boolean flag = false;
-
-        while(no != null && !flag){
-            pos = no.procurarPosicao(info);
-            if(pos < no.getTL() && no.getPalavra().eq == info)
-                flag = true;
-            else
-                no = no.getvLig(pos);
-        }
-
-        return no;
+    public void exibir(){
+        System.out.println("raiz");
     }
-    
+
 }

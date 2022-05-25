@@ -18,6 +18,7 @@ public class No {
     }
     
     public No(String palavra){
+        this();
         this.palavra = palavra;
         this.TL = 1;
     }
@@ -52,20 +53,6 @@ public class No {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
-    }
-    
-    public void remanejar(int pos)
-    {
-        for(int i=TL; i>pos; i--)
-            vLig[i] = vLig[i-1];
-    }
-    
-    public int procurarPosicao(String info)
-    {
-        int pos=0;
-        while(pos<TL && info.compareToIgnoreCase(vLig[pos].getPalavra()) < 0)
-            pos++;
-        return pos;
     }
     
 }
