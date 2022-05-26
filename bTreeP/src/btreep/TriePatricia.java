@@ -40,14 +40,14 @@ public class TriePatricia {
 
             while(!flagFim){
                 int pos = palavra.toLowerCase().charAt(indexPalavra) - 'a';
-                
+
                 if(aux.getvLig(pos) == null)
                 {
                     String restoPalavra="";
-                    for(int i=indexPalavra, j=0; i < palavra.length(); i++){
-                        restoPalavra += palavra.charAt(indexPalavra);
+                    for(int i=indexPalavra; i < palavra.length(); i++){
+                        restoPalavra += palavra.charAt(i);
                     }
-                    
+
                     flagFim = true;
                     noPalavra = new No(restoPalavra);
                     noPalavra.setFlag(flagFim);
@@ -58,13 +58,32 @@ public class TriePatricia {
                 {
                     aux = aux.getvLig(pos);
                     indexPalavra++;
-                }              
+                }
             }
         }
     }
-    
+
     public void exibir(){
         System.out.println("raiz");
+    }
+
+    //.....................
+    public void in_ordem(No raiz)
+    {
+       if (raiz!=null)
+       {
+           for(int i=0; i<raiz.getTL(); i++)
+           {
+               in_ordem(raiz.getvLig(i));
+               System.out.println(raiz.getPalavra());
+           }
+           in_ordem(raiz.getvLig(raiz.getTL()));
+       }
+    }
+
+    public void in_ordem()
+    {
+        in_ordem(raiz);
     }
 
 }
