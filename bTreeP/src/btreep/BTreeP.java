@@ -18,8 +18,8 @@ public class BTreeP {
         for(int i=0; i< TL; i++){
             trie.inserir(arrString[i]);
         };
-        
-        trie.in_ordem();        
+
+        trie.in_ordem();
     }
 
 }

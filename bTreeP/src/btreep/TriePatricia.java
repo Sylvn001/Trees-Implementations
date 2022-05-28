@@ -29,59 +29,52 @@ public class TriePatricia {
     }
 
     public void inserir(String palavra){
+        palavra = palavra.toLowerCase();
         int indexPalavra = 0, i, j;
         boolean flagFim = false;
         No noPalavra, aux = raiz;
 
         while(!flagFim){
-            int pos = palavra.toLowerCase().charAt(indexPalavra) - 'a';
+            int pos = palavra.charAt(indexPalavra) - 'a';
             if(aux.getvLig(pos) == null)
             {
                 String restoPalavra = leString(palavra, indexPalavra);
-
                 flagFim = true;
                 noPalavra = new No(restoPalavra);
                 aux.setvLig(noPalavra, pos);
-//                System.out.println("Adicionado: " + restoPalavra + " PosgetVLig: " + pos );;
                 aux.setTL(aux.getTL()+1);
             }
             else
             {
-                No paiDiv =  new No (""+palavra.toLowerCase().charAt(indexPalavra));
-                No auxFilho = aux.getvLig(pos);
-                String palavraAux = leString(aux.getvLig(pos).getPalavra(), 1); 
-                System.out.println(palavraAux + " - " + paiDiv.getPalavra());
-                aux.setvLig(paiDiv, pos);
-                aux.getvLig(pos).setvLig(auxFilho, pos);
-//                String letraAnterior="";;
-//                i = 0;
-//                while(aux.getvLig(pos).getPalavra().toLowerCase().charAt(i) == palavra.toLowerCase().charAt(indexPalavra)){
-//                    letraAnterior = "" + aux.getvLig(pos).getPalavra().toLowerCase().charAt(i);
-//                    System.out.println(aux.getvLig(pos).getPalavra().charAt(i) + " igual " + palavra.charAt(indexPalavra));;;
-//                    indexPalavra++;
-//                    i++;
-//                }
-//                
-//                if(letraAnterior != aux.getvLig(pos).getPalavra()){
-//                    System.out.println(aux.getvLig(pos).getPalavra().charAt(i) + " - " + palavra.charAt(indexPalavra));
-//                    System.out.println(i);
-//                }
-//                aux = aux.getvLig(pos);
+                No pai = aux;
+                aux = aux.getvLig(pos);
+                i = 0;
+                while(aux.getvLig(pos).getPalavra().charAt(i) == palavra.charAt(indexPalavra)){
+                    indexPalavra++;
+                    i++;
+                }
+
+                if(i < aux.getPalavra().length()){
+
+                }else{
+
+                }
+
             }
         }
-        
+
     }
 
     public void exibir(){
         System.out.println("raiz");
     }
-    
+
     public String leString(String palavra, int pos){
         String palavraAux = "";
         for(int i = pos; i < palavra.length(); i++ ){
             palavraAux += palavra.charAt(i);
         }
-        
+
         return palavraAux;
     }
 
