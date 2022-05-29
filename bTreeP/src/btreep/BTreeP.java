@@ -12,7 +12,7 @@ public class BTreeP {
     public static void main(String[] args) {
 
         int TL = 8;
-        String arrString[] = {"bear", "Bell", "bid", "Bull", "buy", "sell", "stock", "stop"};
+        String arrString[] = {"bear", "Bell", "bid", "Bull", "buy", "sell", "stock", "stop", "stoped", "beared"};
         TriePatricia trie = new TriePatricia();
 
         for(int i=0; i< TL; i++){

@@ -22,6 +22,13 @@ public class No {
         this.palavra = palavra;
         this.TL = 1;
     }
+    
+    public No(String palavra, boolean flag){
+        this();
+        this.palavra = palavra;
+        this.TL = 1;
+        this.flag = flag;
+    }
 
     public int getTL() {
         return TL;

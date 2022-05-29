@@ -30,15 +30,16 @@ public class TriePatricia {
 
     public void inserir(String palavra){
         palavra = palavra.toLowerCase();
-        int indexPalavra = 0, i, j;
+        int indexPalavra = 0, i;
         boolean flagFim = false;
         No noPalavra, aux = raiz;
+        String restoPalavra;
 
         while(!flagFim){
             int pos = palavra.charAt(indexPalavra) - 'a';
             if(aux.getvLig(pos) == null)
             {
-                String restoPalavra = leString(palavra, indexPalavra);
+                restoPalavra = leString(palavra, indexPalavra);
                 flagFim = true;
                 noPalavra = new No(restoPalavra);
                 aux.setvLig(noPalavra, pos);
@@ -48,16 +49,43 @@ public class TriePatricia {
             {
                 No pai = aux;
                 aux = aux.getvLig(pos);
-                i = 0;
-                while(aux.getvLig(pos).getPalavra().charAt(i) == palavra.charAt(indexPalavra)){
+                
+                i = 1;
+                indexPalavra++;
+                System.out.println("indexPalavra: " + indexPalavra);
+                System.out.println("i: " + i);
+                System.out.println("Aux: " + aux.getPalavra());
+                System.out.println(palavra + " Indice: "+ i  +  " - PLength: " + palavra.length() + " auxL " + aux.getPalavra().length());
+                while(aux.getPalavra().charAt(i) == palavra.charAt(indexPalavra)){
+                    System.out.println(i);
+                    System.out.println(palavra);
+                    System.out.println("quantas vezes ");
                     indexPalavra++;
                     i++;
                 }
+                
+                flagFim = true;
+                restoPalavra = palavra.substring(i);
+                noPalavra = new No(restoPalavra, flagFim);
+                pos = restoPalavra.charAt(0) - 'a';
 
                 if(i < aux.getPalavra().length()){
-
-                }else{
-
+                    No noRamificacao = new No(aux.getPalavra().substring(0,i));
+                    aux.setPalavra(aux.getPalavra().substring(i));
+                    int novaPosAux = aux.getPalavra().charAt(0) - 'a';
+                    
+                    noRamificacao.setvLig(noPalavra, pos);
+                    noRamificacao.setvLig(aux, novaPosAux);
+                    pai.setvLig(noRamificacao, pos);
+                }else{                    
+                    if(aux.getvLig(pos) == null){
+                        aux.setvLig(noPalavra, pos);
+                        aux.setFlag(flagFim);
+                    }
+                    
+                    if(palavra.length() == indexPalavra && aux.getPalavra().length() == i){
+                        aux.setFlag(flagFim);
+                    }
                 }
 
             }
