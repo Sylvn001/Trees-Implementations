@@ -47,27 +47,20 @@ public class TriePatricia {
             }
             else
             {
+                int novaPosP;
                 No pai = aux;
                 aux = aux.getvLig(pos);
                 
                 i = 1;
                 indexPalavra++;
-                System.out.println("indexPalavra: " + indexPalavra);
-                System.out.println("i: " + i);
-                System.out.println("Aux: " + aux.getPalavra());
-                System.out.println(palavra + " Indice: "+ i  +  " - PLength: " + palavra.length() + " auxL " + aux.getPalavra().length());
                 while(aux.getPalavra().charAt(i) == palavra.charAt(indexPalavra)){
-                    System.out.println(i);
-                    System.out.println(palavra);
-                    System.out.println("quantas vezes ");
                     indexPalavra++;
                     i++;
                 }
-                
                 flagFim = true;
                 restoPalavra = palavra.substring(i);
                 noPalavra = new No(restoPalavra, flagFim);
-                pos = restoPalavra.charAt(0) - 'a';
+                novaPosP = restoPalavra.charAt(0) - 'a';
 
                 if(i < aux.getPalavra().length()){
                     No noRamificacao = new No(aux.getPalavra().substring(0,i));
@@ -76,6 +69,7 @@ public class TriePatricia {
                     
                     noRamificacao.setvLig(noPalavra, pos);
                     noRamificacao.setvLig(aux, novaPosAux);
+                    System.out.println(aux.getPalavra());
                     pai.setvLig(noRamificacao, pos);
                 }else{                    
                     if(aux.getvLig(pos) == null){
@@ -107,22 +101,22 @@ public class TriePatricia {
     }
 
     //.....................
-    public void in_ordem(No raiz)
+    public void exibe_elementos(No raiz)
     {
        if (raiz!=null)
        {
            for(int i=0; i<raiz.getTL(); i++)
            {
-               in_ordem(raiz.getvLig(i));
+               exibe_elementos(raiz.getvLig(i));
                System.out.println(raiz.getPalavra());
            }
-           in_ordem(raiz.getvLig(raiz.getTL()));
+           exibe_elementos(raiz.getvLig(raiz.getTL()));
        }
     }
 
     public void in_ordem()
     {
-        in_ordem(raiz);
+        exibe_elementos(raiz);
     }
 
 }
