@@ -35,4 +35,8 @@ public class Stack {
         return TL;
     }
     
+    public boolean isEmpty(){
+        return TL == 0;
+    }
+    
 }            

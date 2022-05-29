@@ -6,7 +6,7 @@ package btreep;
  */
 public class TriePatricia {
     private No raiz;
-    private int M = 26;
+    private int alphabet = 26;
 
     public TriePatricia() {
         raiz = new No();
@@ -20,12 +20,12 @@ public class TriePatricia {
         this.raiz = raiz;
     }
 
-    public int getM() {
-        return M;
+    public int getAlphabet() {
+        return alphabet;
     }
 
-    public void setM(int M) {
-        this.M = M;
+    public void setAlphabet(int M) {
+        this.alphabet = alphabet;
     }
 
     public void inserir(String palavra){
@@ -62,22 +62,22 @@ public class TriePatricia {
                 noPalavra = new No(restoPalavra, flagFim);
                 novaPosP = restoPalavra.charAt(0) - 'a';
 
-                if(i < aux.getPalavra().length()){
+                if(i < aux.getPalavra().length()){ //second case
                     No noRamificacao = new No(aux.getPalavra().substring(0,i));
                     aux.setPalavra(aux.getPalavra().substring(i));
+                    aux.setFlag(flagFim);
                     int novaPosAux = aux.getPalavra().charAt(0) - 'a';
                     
-                    noRamificacao.setvLig(noPalavra, pos);
+                    noRamificacao.setvLig(noPalavra, novaPosP);
                     noRamificacao.setvLig(aux, novaPosAux);
-                    System.out.println(aux.getPalavra());
                     pai.setvLig(noRamificacao, pos);
-                }else{                    
-                    if(aux.getvLig(pos) == null){
+                }else{         
+                    if(aux.getvLig(pos) == null){ //third case
                         aux.setvLig(noPalavra, pos);
                         aux.setFlag(flagFim);
                     }
                     
-                    if(palavra.length() == indexPalavra && aux.getPalavra().length() == i){
+                    if(palavra.length() == indexPalavra && aux.getPalavra().length() == i){ //fourth case
                         aux.setFlag(flagFim);
                     }
                 }
@@ -101,22 +101,45 @@ public class TriePatricia {
     }
 
     //.....................
-    public void exibe_elementos(No raiz)
+    public void exibeArvoreNivelANivel()
     {
-       if (raiz!=null)
-       {
-           for(int i=0; i<raiz.getTL(); i++)
-           {
-               exibe_elementos(raiz.getvLig(i));
-               System.out.println(raiz.getPalavra());
-           }
-           exibe_elementos(raiz.getvLig(raiz.getTL()));
+        No aux;
+        int i;
+        String palavra = "";
+        Stack stack = new Stack(); 
+        stack.push(raiz);
+        
+        System.out.println("====== Palavras Cadastradas ======");
+        System.out.println("Raiz");
+
+        while(!stack.isEmpty())
+        {
+            i = 0;
+            aux = stack.pop();
+            
+            while(i < this.alphabet){
+                if(aux.getvLig(i) != null)
+                    stack.push(aux.getvLig(i));
+                i++;
+            }
+            
+        }
+    }
+    
+    public void exibePalavras(No raiz, String palavra)
+    {
+       if (raiz!=null){
+            for(int i=0; i < alphabet; i++){
+                if(raiz.getFlag())
+                    System.out.println(palavra);         
+                exibePalavras(raiz.getvLig(i), (palavra+raiz.getPalavra()));
+            }
        }
     }
-
-    public void in_ordem()
-    {
-        exibe_elementos(raiz);
+    
+    public void exibePalavras(){
+        System.out.println("--- Palavras ---");
+        exibePalavras(raiz, "");
     }
 
 }

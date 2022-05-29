@@ -21,7 +21,7 @@ public class BTreeP {
             trie.inserir(arrString[i]);
         };
 
-        trie.in_ordem();
+        trie.exibePalavras();
     }
 
 }
