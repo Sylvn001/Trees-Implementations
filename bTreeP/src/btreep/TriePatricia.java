@@ -39,9 +39,9 @@ public class TriePatricia {
             int pos = palavra.charAt(indexPalavra) - 'a';
             if(aux.getvLig(pos) == null)
             {
-                restoPalavra = leString(palavra, indexPalavra);
+                restoPalavra = palavra.substring(indexPalavra);// leString(palavra, indexPalavra);
                 flagFim = true;
-                noPalavra = new No(restoPalavra);
+                noPalavra = new No(restoPalavra, flagFim);
                 aux.setvLig(noPalavra, pos);
                 aux.setTL(aux.getTL()+1);
             }
@@ -53,10 +53,11 @@ public class TriePatricia {
                 
                 i = 1;
                 indexPalavra++;
-                while(aux.getPalavra().charAt(i) == palavra.charAt(indexPalavra)){
+                while(i < aux.getPalavra().length() && indexPalavra < palavra.length() && aux.getPalavra().charAt(i) == palavra.charAt(indexPalavra)){
                     indexPalavra++;
                     i++;
                 }
+                
                 flagFim = true;
                 restoPalavra = palavra.substring(i);
                 noPalavra = new No(restoPalavra, flagFim);
@@ -65,9 +66,7 @@ public class TriePatricia {
                 if(i < aux.getPalavra().length()){ //second case
                     No noRamificacao = new No(aux.getPalavra().substring(0,i));
                     aux.setPalavra(aux.getPalavra().substring(i));
-                    aux.setFlag(flagFim);
-                    int novaPosAux = aux.getPalavra().charAt(0) - 'a';
-                    
+                    int novaPosAux = aux.getPalavra().charAt(0) - 'a';                    
                     noRamificacao.setvLig(noPalavra, novaPosP);
                     noRamificacao.setvLig(aux, novaPosAux);
                     pai.setvLig(noRamificacao, pos);
@@ -87,18 +86,14 @@ public class TriePatricia {
 
     }
 
-    public void exibir(){
-        System.out.println("raiz");
-    }
-
-    public String leString(String palavra, int pos){
-        String palavraAux = "";
-        for(int i = pos; i < palavra.length(); i++ ){
-            palavraAux += palavra.charAt(i);
-        }
-
-        return palavraAux;
-    }
+//    public String leString(String palavra, int pos){
+//        String palavraAux = "";
+//        for(int i = pos; i < palavra.length(); i++ ){
+//            palavraAux += palavra.charAt(i);
+//        }
+//
+//        return palavraAux;
+//    }
 
     //.....................
     public void exibeArvoreNivelANivel()
@@ -106,7 +101,7 @@ public class TriePatricia {
         No aux;
         int i;
         String palavra = "";
-        Stack stack = new Stack(); 
+        StackControl stack = new StackControl();
         stack.push(raiz);
         
         System.out.println("====== Palavras Cadastradas ======");
@@ -129,10 +124,11 @@ public class TriePatricia {
     public void exibePalavras(No raiz, String palavra)
     {
        if (raiz!=null){
+            palavra += raiz.getPalavra();
+            if(raiz.getFlag())
+                System.out.println(palavra);         
             for(int i=0; i < alphabet; i++){
-                if(raiz.getFlag())
-                    System.out.println(palavra);         
-                exibePalavras(raiz.getvLig(i), (palavra+raiz.getPalavra()));
+                exibePalavras(raiz.getvLig(i), palavra);
             }
        }
     }

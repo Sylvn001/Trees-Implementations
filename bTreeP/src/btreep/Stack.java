@@ -9,34 +9,29 @@ package btreep;
  * @author junio
  */
 public class Stack {
-    No stack[];
-    int TL;
-    
-    Stack(){
-        this.stack = new No[100];
-        this.TL = 0;
+    No value;
+    Stack prox; 
+
+    public Stack(No value, Stack prox) {
+        this.value = value;
+        this.prox = prox;
+    }
+
+    public No getValue() {
+        return value;
+    }
+
+    public void setValue(No value) {
+        this.value = value;
+    }
+
+    public Stack getProx() {
+        return prox;
+    }
+
+    public void setProx(Stack prox) {
+        this.prox = prox;
     }
     
-    public void push(No element){
-        
-        if(TL < 100){
-            this.stack[TL++] = element;
-        }
-    }
-    
-    public No pop(){
-        if(TL > 0){
-            return this.stack[TL--]; 
-        }else
-            return null;
-    }
-    
-    public int length(){
-        return TL;
-    }
-    
-    public boolean isEmpty(){
-        return TL == 0;
-    }
     
 }            
