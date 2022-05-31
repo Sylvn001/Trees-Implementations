@@ -4,7 +4,7 @@ package btreep;
  *
  * @author Junior
  */
-public class BTreeP {
+public class main {
 
     /**
      * @param args the command line arguments
@@ -16,10 +16,12 @@ public class BTreeP {
         TriePatricia trie = new TriePatricia();
 
         for(int i=0; i< TL; i++){
-            trie.inserir(arrString[i]);
+            trie.inserir(arrString[i]); // 1
         };
-
-        trie.exibePalavras();
+        
+        trie.exibeArvoreNivelANivel();
+        trie.exibePalavras(); // 3
+        
     }
 
 }

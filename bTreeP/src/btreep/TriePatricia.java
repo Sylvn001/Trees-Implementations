@@ -94,25 +94,23 @@ public class TriePatricia {
     {
         No aux;
         int i;
-        String palavra = "";
         StackControl stack = new StackControl();
-        stack.push(raiz);
         
-        System.out.println("====== Palavras Cadastradas ======");
-        System.out.println("Raiz");
-
+        System.out.print("=========== Nodos ============");
+        stack.push(raiz);
         while(!stack.isEmpty())
         {
-            i = 0;
             aux = stack.pop();
+            System.out.println(aux.getPalavra());
             
+            i = 0;
             while(i < this.alphabet){
                 if(aux.getvLig(i) != null)
                     stack.push(aux.getvLig(i));
                 i++;
             }
-            
         }
+        System.out.println("============ FIM =============");
     }
     
     public void exibePalavras(No raiz, String palavra)
@@ -128,9 +126,9 @@ public class TriePatricia {
     }
     
     public void exibePalavras(){
-        System.out.println("--- Palavras ---");
+        System.out.println("========== Palavras ==========");
         exibePalavras(raiz, "");
-        System.out.println("----------------");
+        System.out.println("==============================");
     }
 
 }

@@ -19,6 +19,7 @@ public class StackControl {
     public void push(No element){
         Stack NH = new Stack(element, top);
         top = NH;
+        size++;
     }
     
     public No pop(){
