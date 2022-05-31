@@ -59,11 +59,11 @@ public class TriePatricia {
                 }
                 
                 flagFim = true;
-                restoPalavra = palavra.substring(i);
-                noPalavra = new No(restoPalavra, flagFim);
+                restoPalavra = palavra.substring(indexPalavra);
+                noPalavra = new No(restoPalavra, true);
                 novaPosP = restoPalavra.charAt(0) - 'a';
 
-                if(i < aux.getPalavra().length()){ //second case
+                if(i < aux.getPalavra().length()){ 
                     No noRamificacao = new No(aux.getPalavra().substring(0,i));
                     aux.setPalavra(aux.getPalavra().substring(i));
                     int novaPosAux = aux.getPalavra().charAt(0) - 'a';                    
@@ -71,13 +71,16 @@ public class TriePatricia {
                     noRamificacao.setvLig(aux, novaPosAux);
                     pai.setvLig(noRamificacao, pos);
                 }else{         
-                    if(aux.getvLig(pos) == null){ //third case
-                        aux.setvLig(noPalavra, pos);
-                        aux.setFlag(flagFim);
-                    }
-                    
-                    if(palavra.length() == indexPalavra && aux.getPalavra().length() == i){ //fourth case
-                        aux.setFlag(flagFim);
+                    if(aux.getvLig(novaPosP) == null){ 
+                        aux.setvLig(noPalavra, novaPosP);
+                    }else{
+                        if(indexPalavra < palavra.length()){
+                            flagFim = false;
+                        }
+                        if(palavra.length() == indexPalavra && aux.getPalavra().length() == i){ //fourth case
+                            aux.setFlag(flagFim);
+                            System.out.println("palavra do 4 caso: " + palavra);
+                        }                        
                     }
                 }
 
@@ -85,15 +88,6 @@ public class TriePatricia {
         }
 
     }
-
-//    public String leString(String palavra, int pos){
-//        String palavraAux = "";
-//        for(int i = pos; i < palavra.length(); i++ ){
-//            palavraAux += palavra.charAt(i);
-//        }
-//
-//        return palavraAux;
-//    }
 
     //.....................
     public void exibeArvoreNivelANivel()
@@ -136,6 +130,7 @@ public class TriePatricia {
     public void exibePalavras(){
         System.out.println("--- Palavras ---");
         exibePalavras(raiz, "");
+        System.out.println("----------------");
     }
 
 }
