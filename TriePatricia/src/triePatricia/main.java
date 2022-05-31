@@ -11,8 +11,8 @@ public class main {
      */
     public static void main(String[] args) {
 
-        int TL = 13;
-        String arrString[] = {"bear", "Bell", "bid", "bull", "bully", "bullyed", "buy", "sell", "stock", "stop", "stoped", "beared", "stocked"};
+        int TL = 14;
+        String arrString[] = {"bear", "Bell", "be", "bid", "bull", "bully", "bullyed", "buy", "sell", "stock", "stop", "stoped", "beared", "stocked"};
         TriePatricia trie = new TriePatricia();
 
         for(int i=0; i< TL; i++){

@@ -32,7 +32,7 @@ public class TriePatricia {
         palavra = palavra.toLowerCase();
         int indexPalavra = 0, i;
         boolean flagFim = false;
-        No noPalavra, aux = raiz;
+        No noPalavra = null, aux = raiz;
         String restoPalavra;
 
         while(!flagFim){
@@ -47,7 +47,7 @@ public class TriePatricia {
             }
             else
             {
-                int novaPosP;
+                int novaPosP = 0;
                 No pai = aux;
                 aux = aux.getvLig(pos);
                 
@@ -59,9 +59,11 @@ public class TriePatricia {
                 }
                 
                 flagFim = true;
-                restoPalavra = palavra.substring(indexPalavra);
-                noPalavra = new No(restoPalavra, true);
-                novaPosP = restoPalavra.charAt(0) - 'a';
+                if(palavra.length() > indexPalavra){
+                    restoPalavra = palavra.substring(indexPalavra);
+                    noPalavra = new No(restoPalavra, true);
+                    novaPosP = restoPalavra.charAt(0) - 'a';
+                }
 
                 if(i < aux.getPalavra().length()){ 
                     No noRamificacao = new No(aux.getPalavra().substring(0,i));
@@ -79,7 +81,6 @@ public class TriePatricia {
                         }
                         if(palavra.length() == indexPalavra && aux.getPalavra().length() == i){ //fourth case
                             aux.setFlag(flagFim);
-                            System.out.println("palavra do 4 caso: " + palavra);
                         }                        
                     }
                 }
