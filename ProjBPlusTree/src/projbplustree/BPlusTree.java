@@ -38,7 +38,7 @@ public class BPlusTree
     public void split(No folha, No pai)
     {    
         boolean flagFolha = false;
-        int tamanho, inicio;
+        int tamanho, inicio, posMenor;
         int pos;
     	No cx1 = new No();
         No cx2 = new No();        
@@ -54,6 +54,7 @@ public class BPlusTree
             cx1.setvInfo(i, folha.getvInfo(i));
             cx1.setvLig(i, folha.getvLig(i));
         }
+
         cx1.setvLig(tamanho, folha.getvLig(tamanho));
         cx1.setTl(tamanho);
         
@@ -66,28 +67,37 @@ public class BPlusTree
             cx2.setvLig(i - (inicio), folha.getvLig(i));
             cx2.setTl(cx2.getTl()+1);
         }
-        cx2.setvLig(cx2.getTl(), folha.getvLig(n+1));
-        
+
+        cx2.setvLig(cx2.getTl(), folha.getvLig(n+1));      
 
         if(folha == pai)
         {
-            if(flagFolha)
-                //
-            
-            folha.setvInfo(0, folha.getvInfo(n));
+            cx1.setProx(cx2);
+            cx2.setAnt(cx1);
+            folha.setvInfo(0, folha.getvInfo(tamanho))          
             folha.setTl(1);
             folha.setvLig(0, cx1);
             folha.setvLig(1, cx2);
         }
         else
         {
-            pos = pai.procurarPosicao(folha.getvInfo(n));
+
+            pos = pai.procurarPosicao(folha.getvInfo(tamanho));
+
+            if(pos > 0)
+                irmaE = pai.getvLig(pos-1);
+            if(pos < pai.getTl())
+                irmaD = pai.getvLig(pos+1);
+
+            //achar as irmãs usando a pos 
+            //ligar a irma da esquerda na cx1 e ligar irma da direita na cx2 (se houver)
+
             pai.remanejar(pos);
-            pai.setvInfo(pos, folha.getvInfo(n));
+            pai.setvInfo(pos, folha.getvInfo(tamanho));
             pai.setTl(pai.getTl()+1);
             pai.setvLig(pos, cx1);
             pai.setvLig(pos+1, cx2);
-            if (pai.getTl()>n)
+            if (pai.getTl() > n-1)
             {
                 folha = pai;
                 pai = localizarPai(folha, folha.getvInfo(0));
