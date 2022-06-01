@@ -38,10 +38,11 @@ public class BPlusTree
     public void split(No folha, No pai)
     {    
         boolean flagFolha = false;
-        int tamanho, inicio, posMenor;
+        int tamanho, inicio;
         int pos;
     	No cx1 = new No();
-        No cx2 = new No();        
+        No cx2 = new No();
+        No irmaE = null, irmaD = null;
         
         if(folha.getvLig(0) == null)
             flagFolha = true;          
@@ -68,13 +69,13 @@ public class BPlusTree
             cx2.setTl(cx2.getTl()+1);
         }
 
-        cx2.setvLig(cx2.getTl(), folha.getvLig(n+1));      
+        cx2.setvLig(cx2.getTl(), folha.getvLig(n));      
 
         if(folha == pai)
         {
             cx1.setProx(cx2);
             cx2.setAnt(cx1);
-            folha.setvInfo(0, folha.getvInfo(tamanho))          
+            folha.setvInfo(0, folha.getvInfo(tamanho));        
             folha.setTl(1);
             folha.setvLig(0, cx1);
             folha.setvLig(1, cx2);
@@ -97,13 +98,13 @@ public class BPlusTree
                 irmaD.setAnt(cx2);
                 cx2.setProx(irmaD);
             }
-
+            
             pai.remanejar(pos);
             pai.setvInfo(pos, folha.getvInfo(tamanho));
             pai.setTl(pai.getTl()+1);
             pai.setvLig(pos, cx1);
             pai.setvLig(pos+1, cx2);
-            if (pai.getTl() > n-1)
+            if (pai.getTl() > n+1)
             {
                 folha = pai;
                 pai = localizarPai(folha, folha.getvInfo(0));
@@ -112,7 +113,7 @@ public class BPlusTree
         }
     }
     
-    public void inserir(int info, int posArq)
+    public void inserir(int info)
     {
         No folha,pai;
         int pos;
