@@ -47,7 +47,7 @@ public class BPlusTree
         if(folha.getvLig(0) == null)
             flagFolha = true;          
         
-        tamanho = flagFolha ? Math.round((float) (n-1)/2) : Math.round((float)n/2)-1;
+        tamanho = flagFolha ? Math.round((float) (n-1)/2) : Math.round((float)(n/2)-1);
         inicio = tamanho; 
                 
         for(int i = 0; i<tamanho; i++)
@@ -69,24 +69,24 @@ public class BPlusTree
             cx2.setTl(cx2.getTl()+1);
         }
 
-        cx2.setvLig(cx2.getTl(), folha.getvLig(n));      
+        cx2.setvLig(cx2.getTl(), folha.getvLig(folha.getTl()));      
 
         if(folha == pai)
         {
-            cx1.setProx(cx2);
-            cx2.setAnt(cx1);
             folha.setvInfo(0, folha.getvInfo(tamanho));        
             folha.setTl(1);
             folha.setvLig(0, cx1);
             folha.setvLig(1, cx2);
+            cx1.setProx(cx2);
+            cx2.setAnt(cx1);
         }
         else
         {
-
             pos = pai.procurarPosicao(folha.getvInfo(tamanho));
 
             if(pos > 0)
                 irmaE = pai.getvLig(pos-1);
+            
             if(pos < pai.getTl())
                 irmaD = pai.getvLig(pos+1);
 
@@ -104,7 +104,7 @@ public class BPlusTree
             pai.setTl(pai.getTl()+1);
             pai.setvLig(pos, cx1);
             pai.setvLig(pos+1, cx2);
-            if (pai.getTl() > n+1)
+            if (pai.getTl() > n-1)
             {
                 folha = pai;
                 pai = localizarPai(folha, folha.getvInfo(0));
