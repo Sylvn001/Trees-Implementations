@@ -89,8 +89,14 @@ public class BPlusTree
             if(pos < pai.getTl())
                 irmaD = pai.getvLig(pos+1);
 
-            //achar as irmãs usando a pos 
-            //ligar a irma da esquerda na cx1 e ligar irma da direita na cx2 (se houver)
+            if(irmaE != null){
+                irmaE.setProx(cx1);
+                cx1.setAnt(irmaE);
+            }
+            if(irmaD != null){
+                irmaD.setAnt(cx2);
+                cx2.setProx(irmaD);
+            }
 
             pai.remanejar(pos);
             pai.setvInfo(pos, folha.getvInfo(tamanho));
